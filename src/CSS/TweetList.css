@@ -1,0 +1,8 @@
+.tweet-list{
+    list-style-type: none;
+    /* display: flex;
+    flex-direction: column; */
+}
+.tweet-like-wrapper{
+    margin-bottom:1rem;
+}

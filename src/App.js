@@ -1,12 +1,13 @@
-
+import React from 'react';
 import './App.css';
+import Twitter from "./components/Twitter";
 
 function App() {
   return (
-    <div>
-      Twitter
-    </div>
-  );
+   
+      <Twitter/>
+    
+  )
 }
 
 export default App;
