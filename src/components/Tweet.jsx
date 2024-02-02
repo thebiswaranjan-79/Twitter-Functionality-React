@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../CSS/Tweet.css';
 
 
 const Tweet = ({content, likeCount, createdAt}) => {
+    const[isEditing, setIsEditing] = useState(false);
     return (
         <div className='tweet-wrapper'>
             <div className='tweet-content'>
