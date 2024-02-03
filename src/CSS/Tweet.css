@@ -16,3 +16,8 @@
 .tweet-content{
     margin-bottom: 1rem;
 }
+
+.tweet-edit-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
