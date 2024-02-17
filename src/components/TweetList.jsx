@@ -1,27 +1,23 @@
-import React from 'react';
-import { memo } from 'react';
-import Tweet from './Tweet';
-import '../CSS/TweetList.css';
+import { memo } from "react";
+import { Twit } from "./Tweet";
 
-const MemoisedTweet = memo(Tweet);
-const TweetList = ({tweets, onEditTweet}) => {
-    return (
-        <ul className='tweet-list'>
-            {
-                tweets.map((tweet) => (
-                    <li className='tweet-like-wrapper' key={tweet.id}>
-                       <MemoisedTweet 
-                            tweetId = {tweet.id}
-                            content={tweet.content} 
-                            likeCount={tweet.likeCount} 
-                            createdAt={tweet.createdAt.toString()}
-                            onEdit = {onEditTweet}
-                            />
-                    </li>
-                ))
-            }
-        </ul>
-    );
+const MemoizedTwit = memo(Twit);
+
+export function TwitList({ twits, like, disLike, edit, deleteTwit }) {
+  return (
+    <div className="twit-list">
+      {twits.map((twit) => {
+        return (
+          <MemoizedTwit
+            key={twit.id}
+            twit={twit}
+            like={like}
+            disLike={disLike}
+            edit={edit}
+            deleteTwit={deleteTwit}
+          />
+        );
+      })}
+    </div>
+  );
 }
-
-export default TweetList;

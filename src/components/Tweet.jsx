@@ -1,47 +1,98 @@
-import React, { useState } from 'react';
-import '../CSS/Tweet.css';
+import { BiSolidDislike, BiSolidLike } from "react-icons/bi";
+import { FaEdit, FaSave } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { format } from "date-fns";
+import { useState } from "react";
 
+export function Twit({ twit, like, disLike, edit, deleteTwit }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [twitContent, setTwitContent] = useState(twit.content);
 
-const Tweet = ({tweetId, content, likeCount, createdAt, onEdit}) => {
-    const[isEditing, setIsEditing] = useState(false);
-    return (
-        <div className='tweet-wrapper'>
-            <div className='tweet-edit-wrapper'>
-                <div className='tweet-content'>
-                    {
-                        (isEditing) ? (
-                        <input value={content} type = "text"
-                        onChange={(e) =>{
-                            onEdit({
-                                id : tweetId,
-                                content : e.target.value,
-                                likeCount : likeCount,
-                                createdAt : createdAt,
-                            })
-                        }}/>
-                         ): content 
-                    }
-                </div>
+  function formateDate(inputDateString) {
+    const inputDate = new Date(inputDateString);
+    return format(inputDate, "do MMM, yyyy 'at' HH:mm");
+  }
 
-                <div className='edit-tweet'>
-                    <button onClick={() => setIsEditing(!isEditing)}>
-                        {(isEditing) ? "Save" : "Edit"}
-                    </button>
-                </div>
-            </div>
-           
-
-            <div className='like-createdAt-wrapper'>
-                <div className='likes'>
-                    {likeCount}likes
-                </div>
-                <div className='created-at'>
-                    <b>Tweeted at</b> {createdAt}
-                </div>
-            </div>
-           
+  return (
+    <div className="twit">
+      <div className="twit-content">
+        <div className="text">
+          {isEditing ? (
+            <input
+              value={twitContent}
+              type="text"
+              onChange={(event) => {
+                setTwitContent(event.target.value);
+              }}
+            />
+          ) : (
+            <p>{twitContent}</p>
+          )}
         </div>
-    );
+        <div className="image">
+          {twit.imageUrl ? <img src={twit.imageUrl} alt="tweet-img" /> : ""}
+        </div>
+      </div>
+      <div className="twit-meta-info">
+        <div className="time-edited">
+          <span className="is-edited">{twit.isEdited ? "(Edited)" : ""}</span>{" "}
+          <span className="time-stamp">{formateDate(twit.timeStamp)}</span>
+        </div>
+      </div>
+      <div className="twit-footer">
+        <div className="twit-btnS">
+          <button
+            onClick={() => {
+              like(twit.id);
+            }}
+            className="like"
+          >
+            <span>
+              <BiSolidLike />
+            </span>
+            <span className="like-count">{twit.likeCount}</span>
+          </button>
+          <button
+            onClick={() => {
+              disLike(twit.id);
+            }}
+            className="dislike"
+          >
+            <span>
+              <BiSolidDislike />
+            </span>
+            <span className="dislike-count">{twit.disLikeCount}</span>
+          </button>
+          {isEditing ? (
+            <button
+              onClick={() => {
+                edit(twit.id, twitContent);
+                setIsEditing(false);
+              }}
+              className="save-edit"
+            >
+              <FaSave />
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setIsEditing(true);
+              }}
+              className="edit"
+            >
+              <FaEdit />
+            </button>
+          )}
+          <button
+            onClick={() => {
+              deleteTwit(twit.id);
+            }}
+            className="delete"
+          >
+            <MdDelete />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
-
-export default Tweet;

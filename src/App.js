@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Twitter from "./components/Twitter";
+import {Twitter} from "./components/Twitter";
 
 function App() {
   return (
